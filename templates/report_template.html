@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <title>Smart Fridge</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .wrapper {
+                margin: 50px auto;
+                max-width: 600px;
+            }
+            .shelf-wrapper {
+                margin: 10px 0;
+                width: 280px;
+                height: 245px;
+                border: red dotted 2px;
+                position: relative;
+            }
+            .shelf {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                border: 1px black solid;
+            }
+            .product {
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                border-radius: 100%;
+                border: 1px red solid;
+            }
+            .product-list {
+                width: 100%;
+                margin: 10px 0;
+                border: 2px red dotted;
+                display: flex;
+                justify-content: left;
+                align-items: top;
+                flex-direction: row;
+                flex-wrap: wrap;
+                flex-flow: row wrap;
+            }
+            .product-list-item {
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <h1>Scan Report</h1>
+            <h4>Date: {{ts}}</h4>
+            <h3>Total products: {{ count }}</h3>
+            <p>List product by: <span>item count</span> <span>brand name</span></p>
+            <div class="product-list">
+                {% for p in all_products %}
+                <div class="product-list-item">{{ p['name'] }}</div>
+                {% endfor %}
+            </div>
+            <div>
+                {% for shelf in shelfs %}
+                    <h3>Shelf {{shelf['name']}}: products: {{ shelf['count'] }}</h3>
+                    <p>Layout</p>
+                    <div class="shelf-wrapper">
+                        <div class="shelf">
+                            {% for product in shelf['products'] %}
+                            <div class="product" style="top: {{ product['y']/2 }}; left: {{ product['x']/2 }}">
+                                {{ product['name'] }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>
