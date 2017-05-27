@@ -15,7 +15,7 @@ app.debug = True
 def create_report():
 
     ts = request.args.get('timestamp')
-    pretty_ts = datetime.fromtimestamp(int(ts)).strftime('%H:%M:%S %d %m %Y')
+    pretty_ts = datetime.fromtimestamp(int(ts)).strftime('%H:%M:%S - %d %b %Y')
     data = request.args.get('data')
 
     all_products = []

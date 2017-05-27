@@ -111,7 +111,7 @@
         <div class="wrapper">
             <div class="report-header">
                 <h1>Scan Report</h1>
-                <h4>Date: {{ts}}</h4>
+                <h4>{{ts}}</h4>
             </div>
             <hr>
             <section>
@@ -120,7 +120,7 @@
                 <div>
                     <h3>Total Inventory: {{ all_products|length }}</h3>
                 </div>
-                <h3>Inventory by shelf (click to view layout)</h3>
+                <p>Inventory by shelf (click to view shelf layout)</p>
                 <div class="view-shelf-wrapper">
                     {% for c in shelf_counts %}
                     <a href="#{{c['name']}}">
