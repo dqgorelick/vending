@@ -3,7 +3,7 @@ import requests
 
 from random import randint, uniform
 
-from product_names import names
+from product_names import products
 
 # CLI arg 1 = number of items, DEFAULT=100
 # CLI arg 2 = port, DEFAULT=9000
@@ -18,7 +18,7 @@ def main():
     for item in range(0,number_items):
         # TODO: generate random values
         data.append({
-            'type': randint(0,len(names) - 1),
+            'type': randint(1,len(products)),
             'confidence': uniform(75, 100),
             'shelf': randint(0,3),
             'x': uniform(0,565-20),

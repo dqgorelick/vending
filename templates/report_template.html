@@ -3,72 +3,206 @@
         <title>Smart Fridge</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
+            html, body {
+                margin: 0;
+            }
+            h1, h2, h3, h4, h5, p {
+                padding: 0;
+                margin: 0;
+            }
             .wrapper {
                 margin: 50px auto;
-                max-width: 600px;
+                padding: 0 15px;
+                max-width: 800px;
             }
-            .shelf-wrapper {
-                margin: 10px 0;
+            .report-header {
+                text-align: center;
+            }
+            section {
+                margin-top: 30px;
+            }
+            section hr {
+                border-top: 1px dotted #8c8b8b;
+            }
+            .shelf-wrapper-mobile {
+                display: none;
+                margin: 10px auto;
                 width: 280px;
                 height: 245px;
-                border: red dotted 2px;
                 position: relative;
+            }
+            .shelf-wrapper {
+                display: block;
+                margin: 10px auto;
+                width: 560px;
+                height: 490px;
+                position: relative;
+            }
+            @media (max-width: 600px) {
+              .shelf-wrapper {
+                display: none;
+              }
+              .shelf-wrapper-mobile {
+                display: block;
+              }
             }
             .shelf {
                 position: absolute;
                 width: 100%;
                 height: 100%;
                 border: 1px black solid;
-            }
-            .product {
-                position: absolute;
-                width: 20px;
-                height: 20px;
-                border-radius: 100%;
-                border: 1px red solid;
+                top:0; left:0;
+                z-index:-1;
             }
             .product-list {
                 width: 100%;
-                margin: 10px 0;
-                border: 2px red dotted;
+                margin: 10px auto;
                 display: flex;
                 justify-content: left;
-                align-items: top;
-                flex-direction: row;
+                flex-direction: column;
                 flex-wrap: wrap;
                 flex-flow: row wrap;
             }
             .product-list-item {
                 padding: 5px;
+                width: 110px;
+            }
+            .product-list-item img {
+                float: left;
+                height: 40px;
+                width: auto;
+            }
+            .product-list-item .count {
+                line-height: 40px;
+                text-align: center;
+            }
+            .sort {
+                color: blue;
+                cursor: pointer;
+            }
+            .sort.active, .sort:hover {
+                text-decoration: underline;
+            }
+            .list-alpha, .list-count {
+                display: none;
+            }
+            .list-alpha.active, .list-count.active {
+                display: flex;
+            }
+            .view-shelf-wrapper a {
+                text-decoration: none;
+            }
+            .view-shelf {
+                width: 200px;
+                margin: 5px;
+                background-color: #ccc;
+                text-align: center;
+            }
+            .view-shelf p {
+                color: #000;
+                line-height: 40px;
+            }
+            .view-shelf:hover {
+                background-color: #eee;
             }
         </style>
     </head>
     <body>
         <div class="wrapper">
-            <h1>Scan Report</h1>
-            <h4>Date: {{ts}}</h4>
-            <h3>Total products: {{ count }}</h3>
-            <p>List product by: <span>item count</span> <span>brand name</span></p>
-            <div class="product-list">
-                {% for p in all_products %}
-                <div class="product-list-item">{{ p['name'] }}</div>
-                {% endfor %}
+            <div class="report-header">
+                <h1>Scan Report</h1>
+                <h4>Date: {{ts}}</h4>
             </div>
-            <div>
+            <hr>
+            <section>
+                <h2>Summary</h2>
+                <hr>
+                <div>
+                    <h3>Total Inventory: {{ all_products|length }}</h3>
+                </div>
+                <h3>Inventory by shelf (click to view layout)</h3>
+                <div class="view-shelf-wrapper">
+                    {% for c in shelf_counts %}
+                    <a href="#{{c['name']}}">
+                        <div class="view-shelf">
+                            <p>{{ c['count'] }}</p>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </section>
+            <section>
+                <h2>List of Inventory by Product</h2>
+                <hr>
+                <p>Sort by: <span class="sort sort-count active">Item Count</span> <span class="sort sort-alpha">Brand Name</span></p>
+                <div class="product-list list-count active">
+                    {% for p in sorted_count %}
+                    <div class="product-list-item">
+                        <div>
+                            <img src="./images/{{ products_by_brand[p]['src'] }}">
+                            <p class="count">
+                                {{ products_by_brand[p]['count'] }}
+                            </p>
+                        </div>
+                        <p>{{ p }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="product-list list-alpha">
+                    {% for p in sorted_alpha %}
+                    <div class="product-list-item">
+                        <div>
+                            <img src="./images/{{ products_by_brand[p]['src'] }}">
+                            <p class="count">
+                                {{ products_by_brand[p]['count'] }}
+                            </p>
+                        </div>
+                        <p>{{ p }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <section>
+                <h2>Shelf layout</h2>
+                <hr>
+                <p>Top-shelf to Bottom-shelf</p>
                 {% for shelf in shelfs %}
-                    <h3>Shelf {{shelf['name']}}: products: {{ shelf['count'] }}</h3>
-                    <p>Layout</p>
-                    <div class="shelf-wrapper">
-                        <div class="shelf">
-                            {% for product in shelf['products'] %}
-                            <div class="product" style="top: {{ product['y']/2 }}; left: {{ product['x']/2 }}">
-                                {{ product['name'] }}
-                            </div>
-                            {% endfor %}
+                    <div id="{{shelf['name']}}">
+                        <h3>Shelf {{shelf['name']}} Inventory: {{ shelf['products']|length }}</h3>
+                        <div class="shelf-wrapper-mobile">
+                            <svg class="shelf">
+                                {% for product in shelf['products'] %}
+                                <image xlink:href="./images/{{ product['src'] }}"" x="{{ product['x']/2 }}" y="{{ product['y']/2 }}" height="40px" width="40px"/>
+                                {% endfor %}
+                            </svg>
+                        </div>
+                        <div class="shelf-wrapper">
+                            <svg class="shelf">
+                                {% for product in shelf['products'] %}
+                                <image xlink:href="./images/{{ product['src'] }}" x="{{ product['x'] }}" y="{{ product['y'] }}" height="60px" width="60px"/>
+                                {% endfor %}
+                            </svg>
                         </div>
                     </div>
                 {% endfor %}
-            </div>
+            </section>
         </div>
     </body>
+    <script>
+        (function() {
+            document.querySelector('.sort-count').addEventListener('click', function() {
+                console.log('count');
+                document.querySelector('.list-count').classList.add('active');
+                document.querySelector('.list-alpha').classList.remove('active');
+                document.querySelector('.sort-count').classList.add('active');
+                document.querySelector('.sort-alpha').classList.remove('active');
+            });
+            document.querySelector('.sort-alpha').addEventListener('click', function() {
+                document.querySelector('.list-count').classList.remove('active');
+                document.querySelector('.list-alpha').classList.add('active');
+                document.querySelector('.sort-count').classList.remove('active');
+                document.querySelector('.sort-alpha').classList.add('active');
+            });
+        })();
+    </script>
 </html>

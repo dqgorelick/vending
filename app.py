@@ -5,7 +5,7 @@ import os, json
 from datetime import datetime
 from flask import Flask, request, render_template
 
-from product_names import names
+from product_names import products
 
 app = Flask(__name__, static_url_path='')
 app.debug = True
@@ -35,26 +35,51 @@ def create_report():
         }
     ]
 
-    print (names)
 
     for i in json.loads(data):
         # check for valid shelf number
         shelf = int(i['shelf'])
         if shelf >= 0 and shelf <= 3:
-            for p in shelfs[shelf]['products']:
-                p['name'] = names[p['type']]
             shelfs[shelf]['products'].append(i)
             all_products.append(i)
+            for p in shelfs[shelf]['products']:
+                p['name'] = products[str(p['type'])]['name']
+                p['src'] = products[str(p['type'])]['src']
         else:
             print('product not valid: {}'.format(i))
 
-    for i in shelfs:
-        i['count'] = len(i['products'])
+    shelf_counts = []
+    for s in shelfs:
+        shelf_counts.append(
+            {
+                'count': len(s['products']),
+                'name': s['name']
+            }
+        )
 
+    products_by_brand = {}
+    for p in all_products:
+        try:
+            products_by_brand[p['name']]['count'] += 1
+        except:
+            products_by_brand[p['name']] = {}
+            products_by_brand[p['name']]['count'] = 1
+            products_by_brand[p['name']]['src'] = products[str(p['type'])]['src']
+
+    sorted_alpha = sorted(products_by_brand, key=str.lower)
+    sorted_count = sorted(products_by_brand, key=products_by_brand.get, reverse=True)
 
     fname = os.path.join('./static','report_output.html')
     with open(fname, 'w') as f:
-        html = render_template('report_template.html', ts=pretty_ts, shelfs=shelfs, all_products=all_products, count=len(all_products))
+        html = render_template('report_template.html',
+            ts=pretty_ts,
+            shelfs=reversed(shelfs),
+            shelf_counts=reversed(shelf_counts),
+            all_products=all_products,
+            products_by_brand=products_by_brand,
+            sorted_alpha=sorted_alpha,
+            sorted_count=sorted_count
+        )
         f.write(html)
 
     return ('', 200)
