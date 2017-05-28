@@ -40,35 +40,35 @@ products = {
         "src": "stella-artois.jpg"
     },
     "11": {
-        "name": "Budweiser America",
+        "name": "Budweiser America (can)",
         "src": "bud-america.jpg"
     },
     "12": {
-        "name": "Bud Light",
+        "name": "Bud Light (can)",
         "src": "bud-light.jpg"
     },
     "13": {
-        "name": "Busch Beer",
+        "name": "Busch Beer (can)",
         "src": "busch-beer.png"
     },
     "14": {
-        "name": "Busch Beer (16oz)",
+        "name": "Busch Beer (can - 16oz)",
         "src": "busch-beer.png"
     },
     "15": {
-        "name": "Natural Light",
+        "name": "Natural Light (can)",
         "src": "natural-light.png"
     },
     "16": {
-        "name": "Bud America",
+        "name": "Bud America (can - 25oz)",
         "src": "bud-america.jpg"
     },
     "17": {
-        "name": "Bud Ice",
+        "name": "Bud Ice (can - 25oz)",
         "src": "bud-ice.png"
     },
     "18": {
-        "name": "Bud Light",
+        "name": "Bud Light (can - 25oz)",
         "src": "bud-light.jpg"
     }
 }

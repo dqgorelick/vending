@@ -1,7 +1,10 @@
 <html>
     <head>
         <title>Smart Fridge</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta name="pdfkit-orientation" content="Portrait"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             html, body {
                 margin: 0;
@@ -57,15 +60,11 @@
             .product-list {
                 width: 100%;
                 margin: 10px auto;
-                display: flex;
-                justify-content: left;
-                flex-direction: column;
-                flex-wrap: wrap;
-                flex-flow: row wrap;
             }
             .product-list-item {
                 padding: 5px;
                 width: 110px;
+                display: inline-block;
             }
             .product-list-item img {
                 float: left;
@@ -87,7 +86,7 @@
                 display: none;
             }
             .list-alpha.active, .list-count.active {
-                display: flex;
+                display: block;
             }
             .view-shelf-wrapper a {
                 text-decoration: none;

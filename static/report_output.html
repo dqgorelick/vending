@@ -1,7 +1,10 @@
 <html>
     <head>
         <title>Smart Fridge</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta name="pdfkit-orientation" content="Portrait"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             html, body {
                 margin: 0;
@@ -57,15 +60,11 @@
             .product-list {
                 width: 100%;
                 margin: 10px auto;
-                display: flex;
-                justify-content: left;
-                flex-direction: column;
-                flex-wrap: wrap;
-                flex-flow: row wrap;
             }
             .product-list-item {
                 padding: 5px;
                 width: 110px;
+                display: inline-block;
             }
             .product-list-item img {
                 float: left;
@@ -87,7 +86,7 @@
                 display: none;
             }
             .list-alpha.active, .list-count.active {
-                display: flex;
+                display: block;
             }
             .view-shelf-wrapper a {
                 text-decoration: none;
@@ -111,39 +110,39 @@
         <div class="wrapper">
             <div class="report-header">
                 <h1>Scan Report</h1>
-                <h4>11:43:52 - 27 May 2017</h4>
+                <h4>18:37:25 - 27 May 2017</h4>
             </div>
             <hr>
             <section>
                 <h2>Summary</h2>
                 <hr>
                 <div>
-                    <h3>Total Inventory: 50</h3>
+                    <h3>Total Inventory: 25</h3>
                 </div>
                 <p>Inventory by shelf (click to view shelf layout)</p>
                 <div class="view-shelf-wrapper">
                     
                     <a href="#D">
                         <div class="view-shelf">
-                            <p>13</p>
+                            <p>7</p>
                         </div>
                     </a>
                     
                     <a href="#C">
                         <div class="view-shelf">
-                            <p>14</p>
+                            <p>8</p>
                         </div>
                     </a>
                     
                     <a href="#B">
                         <div class="view-shelf">
-                            <p>12</p>
+                            <p>4</p>
                         </div>
                     </a>
                     
                     <a href="#A">
                         <div class="view-shelf">
-                            <p>11</p>
+                            <p>6</p>
                         </div>
                     </a>
                     
@@ -157,59 +156,19 @@
                     
                     <div class="product-list-item">
                         <div>
-                            <img src="./images/bud-america.jpg">
-                            <p class="count">
-                                9
-                            </p>
-                        </div>
-                        <p>Budweiser America</p>
-                    </div>
-                    
-                    <div class="product-list-item">
-                        <div>
                             <img src="./images/bud-light.jpg">
                             <p class="count">
-                                7
+                                6
                             </p>
                         </div>
-                        <p>Bud Light</p>
-                    </div>
-                    
-                    <div class="product-list-item">
-                        <div>
-                            <img src="./images/corona-extra.png">
-                            <p class="count">
-                                4
-                            </p>
-                        </div>
-                        <p>Corona Extra</p>
-                    </div>
-                    
-                    <div class="product-list-item">
-                        <div>
-                            <img src="./images/busch-beer.png">
-                            <p class="count">
-                                4
-                            </p>
-                        </div>
-                        <p>Busch Beer</p>
-                    </div>
-                    
-                    <div class="product-list-item">
-                        <div>
-                            <img src="./images/michelob-ultra.png">
-                            <p class="count">
-                                3
-                            </p>
-                        </div>
-                        <p>Michelob Ultra</p>
+                        <p>Bud Light (can - 25oz)</p>
                     </div>
                     
                     <div class="product-list-item">
                         <div>
                             <img src="./images/hoegaarden-logo.jpg">
                             <p class="count">
-                                3
+                                2
                             </p>
                         </div>
                         <p>Hoegaarden</p>
@@ -219,37 +178,57 @@
                         <div>
                             <img src="./images/busch-beer.png">
                             <p class="count">
-                                3
+                                2
                             </p>
                         </div>
-                        <p>Busch Beer (16oz)</p>
+                        <p>Busch Beer (can)</p>
                     </div>
                     
                     <div class="product-list-item">
                         <div>
-                            <img src="./images/bud-light-plat.png">
+                            <img src="./images/busch-beer.png">
                             <p class="count">
-                                3
+                                2
                             </p>
                         </div>
-                        <p>Bud Light Platinum</p>
+                        <p>Busch Beer (can - 16oz)</p>
+                    </div>
+                    
+                    <div class="product-list-item">
+                        <div>
+                            <img src="./images/bud-light.jpg">
+                            <p class="count">
+                                2
+                            </p>
+                        </div>
+                        <p>Bud Light</p>
                     </div>
                     
                     <div class="product-list-item">
                         <div>
                             <img src="./images/bud-america.jpg">
                             <p class="count">
-                                3
+                                2
                             </p>
                         </div>
-                        <p>Bud America</p>
+                        <p>Budweiser America</p>
+                    </div>
+                    
+                    <div class="product-list-item">
+                        <div>
+                            <img src="./images/becks.jpg">
+                            <p class="count">
+                                2
+                            </p>
+                        </div>
+                        <p>Beck&#39;s (non-alcoholic)</p>
                     </div>
                     
                     <div class="product-list-item">
                         <div>
                             <img src="./images/stella-artois.jpg">
                             <p class="count">
-                                2
+                                1
                             </p>
                         </div>
                         <p>Stella Artois</p>
@@ -259,7 +238,7 @@
                         <div>
                             <img src="./images/shock-top-twisted-pretzel-wheat.png">
                             <p class="count">
-                                2
+                                1
                             </p>
                         </div>
                         <p>Shock Top - Twisted Pretzel Wheat</p>
@@ -267,42 +246,52 @@
                     
                     <div class="product-list-item">
                         <div>
-                            <img src="./images/shock-top-raspberry-wheat.png">
+                            <img src="./images/michelob-ultra.png">
                             <p class="count">
-                                2
+                                1
                             </p>
                         </div>
-                        <p>Shock Top - Raspberry Wheat</p>
+                        <p>Michelob Ultra</p>
                     </div>
                     
                     <div class="product-list-item">
                         <div>
-                            <img src="./images/natural-light.png">
+                            <img src="./images/corona-extra.png">
                             <p class="count">
-                                2
+                                1
                             </p>
                         </div>
-                        <p>Natural Light</p>
+                        <p>Corona Extra</p>
+                    </div>
+                    
+                    <div class="product-list-item">
+                        <div>
+                            <img src="./images/bud-light.jpg">
+                            <p class="count">
+                                1
+                            </p>
+                        </div>
+                        <p>Bud Light (can)</p>
                     </div>
                     
                     <div class="product-list-item">
                         <div>
                             <img src="./images/bud-ice.png">
                             <p class="count">
-                                2
+                                1
                             </p>
                         </div>
-                        <p>Bud Ice</p>
+                        <p>Bud Ice (can - 25oz)</p>
                     </div>
                     
                     <div class="product-list-item">
                         <div>
-                            <img src="./images/becks.jpg">
+                            <img src="./images/bud-america.jpg">
                             <p class="count">
                                 1
                             </p>
                         </div>
-                        <p>Beck&#39;s (non-alcoholic)</p>
+                        <p>Budweiser America (can)</p>
                     </div>
                     
                 </div>
@@ -312,7 +301,7 @@
                         <div>
                             <img src="./images/becks.jpg">
                             <p class="count">
-                                1
+                                2
                             </p>
                         </div>
                         <p>Beck&#39;s (non-alcoholic)</p>
@@ -320,29 +309,19 @@
                     
                     <div class="product-list-item">
                         <div>
-                            <img src="./images/bud-america.jpg">
-                            <p class="count">
-                                3
-                            </p>
-                        </div>
-                        <p>Bud America</p>
-                    </div>
-                    
-                    <div class="product-list-item">
-                        <div>
                             <img src="./images/bud-ice.png">
                             <p class="count">
-                                2
+                                1
                             </p>
                         </div>
-                        <p>Bud Ice</p>
+                        <p>Bud Ice (can - 25oz)</p>
                     </div>
                     
                     <div class="product-list-item">
                         <div>
                             <img src="./images/bud-light.jpg">
                             <p class="count">
-                                7
+                                2
                             </p>
                         </div>
                         <p>Bud Light</p>
@@ -350,19 +329,29 @@
                     
                     <div class="product-list-item">
                         <div>
-                            <img src="./images/bud-light-plat.png">
+                            <img src="./images/bud-light.jpg">
                             <p class="count">
-                                3
+                                6
                             </p>
                         </div>
-                        <p>Bud Light Platinum</p>
+                        <p>Bud Light (can - 25oz)</p>
+                    </div>
+                    
+                    <div class="product-list-item">
+                        <div>
+                            <img src="./images/bud-light.jpg">
+                            <p class="count">
+                                1
+                            </p>
+                        </div>
+                        <p>Bud Light (can)</p>
                     </div>
                     
                     <div class="product-list-item">
                         <div>
                             <img src="./images/bud-america.jpg">
                             <p class="count">
-                                9
+                                2
                             </p>
                         </div>
                         <p>Budweiser America</p>
@@ -370,29 +359,39 @@
                     
                     <div class="product-list-item">
                         <div>
-                            <img src="./images/busch-beer.png">
+                            <img src="./images/bud-america.jpg">
                             <p class="count">
-                                4
+                                1
                             </p>
                         </div>
-                        <p>Busch Beer</p>
+                        <p>Budweiser America (can)</p>
                     </div>
                     
                     <div class="product-list-item">
                         <div>
                             <img src="./images/busch-beer.png">
                             <p class="count">
-                                3
+                                2
                             </p>
                         </div>
-                        <p>Busch Beer (16oz)</p>
+                        <p>Busch Beer (can - 16oz)</p>
+                    </div>
+                    
+                    <div class="product-list-item">
+                        <div>
+                            <img src="./images/busch-beer.png">
+                            <p class="count">
+                                2
+                            </p>
+                        </div>
+                        <p>Busch Beer (can)</p>
                     </div>
                     
                     <div class="product-list-item">
                         <div>
                             <img src="./images/corona-extra.png">
                             <p class="count">
-                                4
+                                1
                             </p>
                         </div>
                         <p>Corona Extra</p>
@@ -402,7 +401,7 @@
                         <div>
                             <img src="./images/hoegaarden-logo.jpg">
                             <p class="count">
-                                3
+                                2
                             </p>
                         </div>
                         <p>Hoegaarden</p>
@@ -412,7 +411,7 @@
                         <div>
                             <img src="./images/michelob-ultra.png">
                             <p class="count">
-                                3
+                                1
                             </p>
                         </div>
                         <p>Michelob Ultra</p>
@@ -420,29 +419,9 @@
                     
                     <div class="product-list-item">
                         <div>
-                            <img src="./images/natural-light.png">
-                            <p class="count">
-                                2
-                            </p>
-                        </div>
-                        <p>Natural Light</p>
-                    </div>
-                    
-                    <div class="product-list-item">
-                        <div>
-                            <img src="./images/shock-top-raspberry-wheat.png">
-                            <p class="count">
-                                2
-                            </p>
-                        </div>
-                        <p>Shock Top - Raspberry Wheat</p>
-                    </div>
-                    
-                    <div class="product-list-item">
-                        <div>
                             <img src="./images/shock-top-twisted-pretzel-wheat.png">
                             <p class="count">
-                                2
+                                1
                             </p>
                         </div>
                         <p>Shock Top - Twisted Pretzel Wheat</p>
@@ -452,7 +431,7 @@
                         <div>
                             <img src="./images/stella-artois.jpg">
                             <p class="count">
-                                2
+                                1
                             </p>
                         </div>
                         <p>Stella Artois</p>
@@ -466,256 +445,156 @@
                 <p>Top-shelf to Bottom-shelf</p>
                 
                     <div id="D">
-                        <h3>Shelf D Inventory: 13</h3>
+                        <h3>Shelf D Inventory: 7</h3>
                         <div class="shelf-wrapper-mobile">
                             <svg class="shelf">
                                 
-                                <image xlink:href="./images/hoegaarden-logo.jpg"" x="88.3794634316" y="20.3254582003" height="40px" width="40px"/>
+                                <image xlink:href="./images/corona-extra.png"" x="67.8325551217" y="150.061856553" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/bud-america.jpg"" x="196.748710726" y="229.915253414" height="40px" width="40px"/>
+                                <image xlink:href="./images/busch-beer.png"" x="116.394124152" y="218.097003863" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/bud-light-plat.png"" x="245.10099556" y="88.6882692523" height="40px" width="40px"/>
+                                <image xlink:href="./images/bud-america.jpg"" x="55.8119471551" y="204.039880984" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/busch-beer.png"" x="188.539832523" y="190.05569569" height="40px" width="40px"/>
+                                <image xlink:href="./images/bud-light.jpg"" x="44.42198998" y="132.640196232" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/bud-america.jpg"" x="52.3293183451" y="150.183508146" height="40px" width="40px"/>
+                                <image xlink:href="./images/bud-america.jpg"" x="250.561639402" y="83.8388288032" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/natural-light.png"" x="122.12643721" y="190.511978248" height="40px" width="40px"/>
+                                <image xlink:href="./images/bud-america.jpg"" x="233.813940524" y="30.9960111199" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/shock-top-twisted-pretzel-wheat.png"" x="20.4844521224" y="186.598828607" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/michelob-ultra.png"" x="83.2927239163" y="71.7636714944" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/hoegaarden-logo.jpg"" x="193.08405675" y="213.708679196" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/bud-light.jpg"" x="129.58059024" y="34.6403567416" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/bud-light.jpg"" x="261.452895942" y="29.7569257659" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/corona-extra.png"" x="270.426365303" y="32.3648098443" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/shock-top-raspberry-wheat.png"" x="191.146401354" y="33.0341280214" height="40px" width="40px"/>
+                                <image xlink:href="./images/bud-light.jpg"" x="25.3988287462" y="130.795616427" height="40px" width="40px"/>
                                 
                             </svg>
                         </div>
                         <div class="shelf-wrapper">
                             <svg class="shelf">
                                 
-                                <image xlink:href="./images/hoegaarden-logo.jpg" x="176.758926863" y="40.6509164005" height="60px" width="60px"/>
+                                <image xlink:href="./images/corona-extra.png" x="135.665110243" y="300.123713105" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/bud-america.jpg" x="393.497421452" y="459.830506828" height="60px" width="60px"/>
+                                <image xlink:href="./images/busch-beer.png" x="232.788248304" y="436.194007727" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/bud-light-plat.png" x="490.20199112" y="177.376538505" height="60px" width="60px"/>
+                                <image xlink:href="./images/bud-america.jpg" x="111.62389431" y="408.079761969" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/busch-beer.png" x="377.079665047" y="380.11139138" height="60px" width="60px"/>
+                                <image xlink:href="./images/bud-light.jpg" x="88.84397996" y="265.280392464" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/bud-america.jpg" x="104.65863669" y="300.367016292" height="60px" width="60px"/>
+                                <image xlink:href="./images/bud-america.jpg" x="501.123278805" y="167.677657606" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/natural-light.png" x="244.252874421" y="381.023956496" height="60px" width="60px"/>
+                                <image xlink:href="./images/bud-america.jpg" x="467.627881048" y="61.9920222397" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/shock-top-twisted-pretzel-wheat.png" x="40.9689042449" y="373.197657214" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/michelob-ultra.png" x="166.585447833" y="143.527342989" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/hoegaarden-logo.jpg" x="386.1681135" y="427.417358393" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/bud-light.jpg" x="259.161180481" y="69.2807134833" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/bud-light.jpg" x="522.905791883" y="59.5138515318" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/corona-extra.png" x="540.852730607" y="64.7296196887" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/shock-top-raspberry-wheat.png" x="382.292802707" y="66.0682560428" height="60px" width="60px"/>
+                                <image xlink:href="./images/bud-light.jpg" x="50.7976574924" y="261.591232854" height="60px" width="60px"/>
                                 
                             </svg>
                         </div>
                     </div>
                 
                     <div id="C">
-                        <h3>Shelf C Inventory: 14</h3>
+                        <h3>Shelf C Inventory: 8</h3>
                         <div class="shelf-wrapper-mobile">
                             <svg class="shelf">
                                 
-                                <image xlink:href="./images/bud-america.jpg"" x="265.073028976" y="102.355528025" height="40px" width="40px"/>
+                                <image xlink:href="./images/hoegaarden-logo.jpg"" x="61.4282919347" y="29.2655476602" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/busch-beer.png"" x="271.764597595" y="140.200977397" height="40px" width="40px"/>
+                                <image xlink:href="./images/shock-top-twisted-pretzel-wheat.png"" x="7.39217437099" y="48.0095393491" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/corona-extra.png"" x="115.191926549" y="80.4726594525" height="40px" width="40px"/>
+                                <image xlink:href="./images/busch-beer.png"" x="138.121916509" y="147.975776686" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/shock-top-raspberry-wheat.png"" x="227.969221387" y="95.2064289563" height="40px" width="40px"/>
+                                <image xlink:href="./images/becks.jpg"" x="18.9776975677" y="31.4721700541" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/bud-ice.png"" x="235.761531701" y="79.8214543238" height="40px" width="40px"/>
+                                <image xlink:href="./images/bud-ice.png"" x="260.574457" y="221.178780971" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/stella-artois.jpg"" x="90.7373025262" y="22.1145283475" height="40px" width="40px"/>
+                                <image xlink:href="./images/bud-light.jpg"" x="178.709156981" y="105.90113843" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/shock-top-twisted-pretzel-wheat.png"" x="101.944276544" y="221.576239561" height="40px" width="40px"/>
+                                <image xlink:href="./images/bud-light.jpg"" x="60.4468591294" y="229.64822478" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/bud-america.jpg"" x="213.951714484" y="107.71474596" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/bud-america.jpg"" x="226.710154007" y="183.519134674" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/bud-light.jpg"" x="174.130881825" y="69.6044702736" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/bud-america.jpg"" x="14.2162999395" y="85.6039759634" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/natural-light.png"" x="134.164002256" y="15.3212551242" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/michelob-ultra.png"" x="199.726939445" y="18.381428407" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/bud-light.jpg"" x="72.0818844455" y="17.0299043752" height="40px" width="40px"/>
+                                <image xlink:href="./images/bud-light.jpg"" x="105.481272647" y="17.3851757828" height="40px" width="40px"/>
                                 
                             </svg>
                         </div>
                         <div class="shelf-wrapper">
                             <svg class="shelf">
                                 
-                                <image xlink:href="./images/bud-america.jpg" x="530.146057951" y="204.71105605" height="60px" width="60px"/>
+                                <image xlink:href="./images/hoegaarden-logo.jpg" x="122.856583869" y="58.5310953203" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/busch-beer.png" x="543.52919519" y="280.401954793" height="60px" width="60px"/>
+                                <image xlink:href="./images/shock-top-twisted-pretzel-wheat.png" x="14.784348742" y="96.0190786982" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/corona-extra.png" x="230.383853099" y="160.945318905" height="60px" width="60px"/>
+                                <image xlink:href="./images/busch-beer.png" x="276.243833017" y="295.951553372" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/shock-top-raspberry-wheat.png" x="455.938442775" y="190.412857913" height="60px" width="60px"/>
+                                <image xlink:href="./images/becks.jpg" x="37.9553951355" y="62.9443401083" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/bud-ice.png" x="471.523063402" y="159.642908648" height="60px" width="60px"/>
+                                <image xlink:href="./images/bud-ice.png" x="521.148914" y="442.357561941" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/stella-artois.jpg" x="181.474605052" y="44.229056695" height="60px" width="60px"/>
+                                <image xlink:href="./images/bud-light.jpg" x="357.418313961" y="211.80227686" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/shock-top-twisted-pretzel-wheat.png" x="203.888553088" y="443.152479122" height="60px" width="60px"/>
+                                <image xlink:href="./images/bud-light.jpg" x="120.893718259" y="459.296449561" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/bud-america.jpg" x="427.903428969" y="215.429491921" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/bud-america.jpg" x="453.420308014" y="367.038269348" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/bud-light.jpg" x="348.261763649" y="139.208940547" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/bud-america.jpg" x="28.432599879" y="171.207951927" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/natural-light.png" x="268.328004512" y="30.6425102484" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/michelob-ultra.png" x="399.453878891" y="36.762856814" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/bud-light.jpg" x="144.163768891" y="34.0598087503" height="60px" width="60px"/>
+                                <image xlink:href="./images/bud-light.jpg" x="210.962545294" y="34.7703515655" height="60px" width="60px"/>
                                 
                             </svg>
                         </div>
                     </div>
                 
                     <div id="B">
-                        <h3>Shelf B Inventory: 12</h3>
+                        <h3>Shelf B Inventory: 4</h3>
                         <div class="shelf-wrapper-mobile">
                             <svg class="shelf">
                                 
-                                <image xlink:href="./images/bud-light-plat.png"" x="112.706461322" y="208.137942576" height="40px" width="40px"/>
+                                <image xlink:href="./images/stella-artois.jpg"" x="150.591815092" y="229.489559524" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/bud-america.jpg"" x="195.675730238" y="117.115355749" height="40px" width="40px"/>
+                                <image xlink:href="./images/bud-light.jpg"" x="142.85336485" y="15.4294212461" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/michelob-ultra.png"" x="9.00681705336" y="108.814844929" height="40px" width="40px"/>
+                                <image xlink:href="./images/bud-light.jpg"" x="202.384625576" y="134.269497768" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/bud-america.jpg"" x="4.31259580927" y="221.182193949" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/bud-light.jpg"" x="64.3017520393" y="100.198557814" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/bud-america.jpg"" x="185.216953681" y="11.7818147578" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/stella-artois.jpg"" x="260.704236039" y="174.414313963" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/bud-light-plat.png"" x="132.215513213" y="179.712430516" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/corona-extra.png"" x="86.5171066694" y="115.47594201" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/bud-light.jpg"" x="63.4461391644" y="222.259965925" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/busch-beer.png"" x="135.390170119" y="139.759151433" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/busch-beer.png"" x="205.002382744" y="19.221083628" height="40px" width="40px"/>
+                                <image xlink:href="./images/michelob-ultra.png"" x="16.050448054" y="193.622446053" height="40px" width="40px"/>
                                 
                             </svg>
                         </div>
                         <div class="shelf-wrapper">
                             <svg class="shelf">
                                 
-                                <image xlink:href="./images/bud-light-plat.png" x="225.412922643" y="416.275885152" height="60px" width="60px"/>
+                                <image xlink:href="./images/stella-artois.jpg" x="301.183630184" y="458.979119049" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/bud-america.jpg" x="391.351460477" y="234.230711498" height="60px" width="60px"/>
+                                <image xlink:href="./images/bud-light.jpg" x="285.7067297" y="30.8588424923" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/michelob-ultra.png" x="18.0136341067" y="217.629689858" height="60px" width="60px"/>
+                                <image xlink:href="./images/bud-light.jpg" x="404.769251152" y="268.538995536" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/bud-america.jpg" x="8.62519161854" y="442.364387899" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/bud-light.jpg" x="128.603504079" y="200.397115627" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/bud-america.jpg" x="370.433907363" y="23.5636295156" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/stella-artois.jpg" x="521.408472079" y="348.828627926" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/bud-light-plat.png" x="264.431026426" y="359.424861032" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/corona-extra.png" x="173.034213339" y="230.95188402" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/bud-light.jpg" x="126.892278329" y="444.519931849" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/busch-beer.png" x="270.780340238" y="279.518302865" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/busch-beer.png" x="410.004765487" y="38.4421672561" height="60px" width="60px"/>
+                                <image xlink:href="./images/michelob-ultra.png" x="32.1008961081" y="387.244892106" height="60px" width="60px"/>
                                 
                             </svg>
                         </div>
                     </div>
                 
                     <div id="A">
-                        <h3>Shelf A Inventory: 11</h3>
+                        <h3>Shelf A Inventory: 6</h3>
                         <div class="shelf-wrapper-mobile">
                             <svg class="shelf">
                                 
-                                <image xlink:href="./images/corona-extra.png"" x="107.120508701" y="207.576976424" height="40px" width="40px"/>
+                                <image xlink:href="./images/bud-light.jpg"" x="140.505634925" y="42.0058182663" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/busch-beer.png"" x="57.0687959016" y="147.483331591" height="40px" width="40px"/>
+                                <image xlink:href="./images/busch-beer.png"" x="182.615365836" y="51.1714271258" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/bud-ice.png"" x="58.7079811936" y="220.217308605" height="40px" width="40px"/>
+                                <image xlink:href="./images/hoegaarden-logo.jpg"" x="231.888495836" y="186.809722892" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/bud-light.jpg"" x="161.460592669" y="51.3615340568" height="40px" width="40px"/>
+                                <image xlink:href="./images/becks.jpg"" x="226.676631035" y="36.9155397336" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/becks.jpg"" x="254.046663633" y="49.9121697245" height="40px" width="40px"/>
+                                <image xlink:href="./images/bud-light.jpg"" x="214.422350497" y="130.420230091" height="40px" width="40px"/>
                                 
-                                <image xlink:href="./images/hoegaarden-logo.jpg"" x="24.3390837961" y="200.449329196" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/bud-america.jpg"" x="152.567674756" y="80.6423252914" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/busch-beer.png"" x="217.48815046" y="63.3911269691" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/bud-america.jpg"" x="85.6840190528" y="140.243687354" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/bud-america.jpg"" x="258.170492572" y="7.25188657292" height="40px" width="40px"/>
-                                
-                                <image xlink:href="./images/busch-beer.png"" x="138.154453014" y="166.115972579" height="40px" width="40px"/>
+                                <image xlink:href="./images/busch-beer.png"" x="105.765933235" y="149.518068784" height="40px" width="40px"/>
                                 
                             </svg>
                         </div>
                         <div class="shelf-wrapper">
                             <svg class="shelf">
                                 
-                                <image xlink:href="./images/corona-extra.png" x="214.241017402" y="415.153952848" height="60px" width="60px"/>
+                                <image xlink:href="./images/bud-light.jpg" x="281.01126985" y="84.0116365326" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/busch-beer.png" x="114.137591803" y="294.966663182" height="60px" width="60px"/>
+                                <image xlink:href="./images/busch-beer.png" x="365.230731673" y="102.342854252" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/bud-ice.png" x="117.415962387" y="440.43461721" height="60px" width="60px"/>
+                                <image xlink:href="./images/hoegaarden-logo.jpg" x="463.776991672" y="373.619445783" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/bud-light.jpg" x="322.921185339" y="102.723068114" height="60px" width="60px"/>
+                                <image xlink:href="./images/becks.jpg" x="453.353262071" y="73.8310794673" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/becks.jpg" x="508.093327267" y="99.8243394491" height="60px" width="60px"/>
+                                <image xlink:href="./images/bud-light.jpg" x="428.844700994" y="260.840460182" height="60px" width="60px"/>
                                 
-                                <image xlink:href="./images/hoegaarden-logo.jpg" x="48.6781675922" y="400.898658392" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/bud-america.jpg" x="305.135349513" y="161.284650583" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/busch-beer.png" x="434.97630092" y="126.782253938" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/bud-america.jpg" x="171.368038106" y="280.487374708" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/bud-america.jpg" x="516.340985144" y="14.5037731458" height="60px" width="60px"/>
-                                
-                                <image xlink:href="./images/busch-beer.png" x="276.308906027" y="332.231945158" height="60px" width="60px"/>
+                                <image xlink:href="./images/busch-beer.png" x="211.531866469" y="299.036137568" height="60px" width="60px"/>
                                 
                             </svg>
                         </div>
