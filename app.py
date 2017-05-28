@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import os, sys, json
+from dateutil import tz
 
-from datetime import datetime
 from flask import Flask, request, render_template
+from datetime import datetime
 import boto3
 from dotenv import load_dotenv
-from dateutil import tz
 
 from product_names import products
 
