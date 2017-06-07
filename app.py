@@ -3,10 +3,11 @@
 import os, sys, json
 from dateutil import tz
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, url_for
 from datetime import datetime
 import boto3
 from dotenv import load_dotenv
+import pdfkit
 
 from product_names import products
 
@@ -144,6 +145,20 @@ def upload_report():
 @app.route("/report")
 def get_report():
     return app.send_static_file('report_output.html')
+
+@app.route('/render')
+def create_pdf():
+
+    input_html = os.path.join('./static','report_output.html')
+    output_pdf = os.path.join('./static','report_output.pdf')
+
+    options = {
+        'lowquality': None
+    }
+
+    pdfkit.from_file(input_html, output_pdf, options=options)
+    return app.send_static_file('report_output.pdf')
+
 
 if __name__ == '__main__':
     port = 9000
