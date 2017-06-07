@@ -97,9 +97,10 @@ def create_report():
                 sorted_count=sorted_count
             )
         except Exception as e:
-            return('Cannot render HTML'.format(e), 422)
+            return('Cannot render HTML: {}'.format(e), 422)
         try:
             f.write(html)
+            print('writing html file')
         except Exception as e:
             return('Error writing file error: {}'.format(e), 422)
 

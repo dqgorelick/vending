@@ -4,10 +4,10 @@ from random import randint, uniform
 from product_names import products
 
 # test ec2 instance
-endpoint = "http://ec2-54-175-77-220.compute-1.amazonaws.com/update"
+# endpoint = "http://ec2-54-175-77-220.compute-1.amazonaws.com/update"
 
 # test local
-# endpoint = "http://127.0.0.1:9000/update"
+endpoint = "http://127.0.0.1:9000/update"
 
 def main():
 
@@ -32,7 +32,7 @@ def main():
 
     try:
         response = requests.get(endpoint, params=package)
-        print('response: {}'.format(response))
+        print('response: {} - {}'.format(response.text, response.status_code))
     except requests.exceptions.RequestException as e:
         print('error: {}',format(e))
         sys.exit(1)
