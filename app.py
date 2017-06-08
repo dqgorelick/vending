@@ -101,7 +101,7 @@ def create_report():
             return('Cannot render HTML: {}'.format(e), 422)
         try:
             f.write(html)
-            print('writing html file')
+            # print('writing html file')
         except Exception as e:
             return('Error writing file error: {}'.format(e), 422)
 
@@ -164,4 +164,8 @@ if __name__ == '__main__':
     port = 9000
     if len(sys.argv) > 1:
         port = int(sys.argv[1])
+        if port == 80:
+            # only use port 80 on prod
+            pdfkit.configuration(wkhtmltopdf='~/bin/bin')
+
     app.run(host='0.0.0.0', port=port, threaded=False)

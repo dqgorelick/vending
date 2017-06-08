@@ -128,6 +128,14 @@
             .view-shelf:hover {
                 background-color: #eee;
             }
+            .title {
+                position: relative;
+            }
+            .title span {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+            }
             @font-face {
                 font-family:'Proxima Nova';
                 src: url('./fonts/Proxima Nova Regular.otf') format('opentype')
@@ -150,8 +158,11 @@
             </div>
             <hr>
             <section>
-                <section>
-                <h2>Summary</h2>
+                <div class="title">
+                    <h2>Summary</h2>
+                    <a href="./render"><span>Download PDF</span></a>
+                </div>
+                <br>
                 <hr>
                 <h3>Total Inventory: {{ all_products|length }}</h3>
                 <br>
