@@ -4,6 +4,7 @@ import os, sys, json
 from dateutil import tz
 
 from flask import Flask, request, render_template, url_for
+from flask_httpauth import HTTPBasicAuth
 from datetime import datetime
 import boto3
 from dotenv import load_dotenv
@@ -12,12 +13,16 @@ import pdfkit
 from product_names import products
 
 app = Flask(__name__, static_url_path='')
-# app.debug = True
+auth = HTTPBasicAuth()
 
+@auth.verify_password
+def get_pw(username, password):
+    user = os.environ['SMART_FRIDGE_LOGIN']
+    pw = os.environ['SMART_FRIDGE_PASSWORD']
+    return username == user and password == pw
 
 @app.route('/update')
 def create_report():
-
     try:
         ts = request.args.get('timestamp')
         utc_ts = datetime.fromtimestamp(int(ts))
@@ -114,17 +119,9 @@ def create_report():
 
 @app.route("/upload")
 def upload_report():
-    try:
-        dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
-    except Exception as e:
-        return('Cannot find .env path: {}'.format(e), 500)
-
-    load_dotenv(dotenv_path)
-
     aws_access_key_id = os.environ['AWS_ACCESS_KEY_ID']
     aws_secret_access_key = os.environ['AWS_SECRET_ACCESS_KEY']
 
-    # create profile in ~/.aws/credentials for "smart-fridge"
     session = boto3.session.Session(
         aws_access_key_id=aws_access_key_id,
         aws_secret_access_key=aws_secret_access_key,
@@ -143,6 +140,7 @@ def upload_report():
         return('could not upload: {}'.format(e), 500)
 
 @app.route("/report")
+@auth.login_required
 def get_report():
     return app.send_static_file('report_output.html')
 
@@ -161,6 +159,13 @@ def create_pdf():
 
 
 if __name__ == '__main__':
+    # load env variables
+    try:
+        dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+    except Exception as e:
+        print ('cannot find .env file')
+    load_dotenv(dotenv_path)
+
     port = 9000
     if len(sys.argv) > 1:
         port = int(sys.argv[1])
