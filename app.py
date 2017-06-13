@@ -62,6 +62,7 @@ def create_report():
                 try:
                     p['name'] = products[str(p['type'])]['name']
                     p['src'] = products[str(p['type'])]['src']
+                    p['width'] = float(products[str(p['type'])]['width'])
                 except Exception as e:
                     return('Invalid key: {}, error: {}'.format(p['type'], e), 422)
         else:
@@ -110,7 +111,10 @@ def create_report():
         except Exception as e:
             return('Error writing file error: {}'.format(e), 422)
 
+    create_pdf()
+
     try:
+        print('uploaded reports')
         upload_report()
     except Exception as e:
         return('Cannot upload report to S3: {}'.format(e), 422)
@@ -130,19 +134,38 @@ def upload_report():
     s3 = session.resource("s3")
 
     bucket_name = "smart-fridge-dark-matter"
-    file_path = os.path.join('./static','report_output.html')
-    object_name = 'report_output.html'
+    html_file_path = os.path.join('./static','report_output.html')
+    html_name = 'report_output.html'
+    pdf_file_path = os.path.join('./static','report_output.pdf')
+    pdf_name = 'report_output.pdf'
 
+    # upload html report
     try:
-        response = s3.Object(bucket_name, object_name).put(Body=open(file_path, 'rb'), ContentType='text/html')
-        return('uploaded!', 200)
+        print('uploading HTML')
+        response = s3.Object(bucket_name, html_name).put(Body=open(html_file_path, 'rb'), ContentType='text/html')
     except Exception as e:
-        return('could not upload: {}'.format(e), 500)
+        print('could not upload html: {}'.format(e))
+        return('could not upload html: {}'.format(e), 500)
+
+    # upload pdf report
+    try:
+        print('uploading PDF')
+        response = s3.Object(bucket_name, pdf_name).put(Body=open(pdf_file_path, 'rb'), ContentType='text/html')
+    except Exception as e:
+        print('could not upload pdf: {}'.format(e))
+        return('could not upload pdf: {}'.format(e), 500)
+
+    return('uploaded files!', 200)
 
 @app.route("/report")
 @auth.login_required
 def get_report():
     return app.send_static_file('report_output.html')
+
+@app.route("/pdf")
+@auth.login_required
+def get_report_pdf():
+    return app.send_static_file('report_output.pdf')
 
 @app.route('/render')
 def create_pdf():
@@ -155,7 +178,6 @@ def create_pdf():
     }
 
     pdfkit.from_file(input_html, output_pdf, options=options)
-    return app.send_static_file('report_output.pdf')
 
 
 if __name__ == '__main__':
