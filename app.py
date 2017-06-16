@@ -17,9 +17,42 @@ auth = HTTPBasicAuth()
 
 @auth.verify_password
 def get_pw(username, password):
-    user = os.environ['SMART_FRIDGE_LOGIN']
-    pw = os.environ['SMART_FRIDGE_PASSWORD']
+    user = os.environ['SMART_COOLER_LOGIN']
+    pw = os.environ['SMART_COOLER_PASSWORD']
     return username == user and password == pw
+
+@app.route("/")
+@auth.login_required
+def get_index():
+    return app.send_static_file('index.html')
+
+@app.route("/report")
+@auth.login_required
+def get_report():
+    return app.send_static_file('report_output.html')
+
+@app.route("/pdf")
+@auth.login_required
+def get_report_pdf():
+    return app.send_static_file('report_output.pdf')
+
+@app.route("/historical")
+@auth.login_required
+def get_historical():
+    return app.send_static_file('index.html')
+
+@app.route("/activity")
+@auth.login_required
+def get_activity():
+    return app.send_static_file('index.html')
+
+@app.route("/door_open")
+def door_open():
+    return('working door open', 200)
+
+@app.route("/door_close")
+def door_close():
+    return('working door closed', 200)
 
 @app.route('/update')
 def create_report():
@@ -28,6 +61,13 @@ def create_report():
         utc_ts = datetime.fromtimestamp(int(ts))
     except Exception as e:
         return('invalid data sent: {}'.format(e), 422)
+    try:
+        upload = bool(request.args.get('upload'))
+    except Exception as e:
+        upload = False
+
+    for i in request.args:
+        print(i)
 
     from_zone = tz.tzutc()
     to_zone = tz.gettz('America/New_York')
@@ -40,6 +80,7 @@ def create_report():
         return('invalid data sent: {}'.format(e), 422)
 
     all_products = []
+    shelf_map = {'D': 0, 'C': 1, 'B': 2, 'A': 3}
     shelfs = [
         { 'name': 'D', 'products': [] },
         { 'name': 'C', 'products': [] },
@@ -54,11 +95,11 @@ def create_report():
 
     for i in json_data:
         # check for valid shelf number
-        shelf = int(i['shelf'])
-        if shelf >= 0 and shelf <= 3:
-            shelfs[shelf]['products'].append(i)
+        shelf = i['shelf']
+        if shelf == 'A' or shelf == 'B' or shelf == 'C' or shelf == 'D':
+            shelfs[shelf_map[shelf]]['products'].append(i)
             all_products.append(i)
-            for p in shelfs[shelf]['products']:
+            for p in shelfs[shelf_map[shelf]]['products']:
                 try:
                     p['name'] = products[str(p['type'])]['name']
                     p['src'] = products[str(p['type'])]['src']
@@ -107,24 +148,24 @@ def create_report():
             return('Cannot render HTML: {}'.format(e), 422)
         try:
             f.write(html)
-            # print('writing html file')
         except Exception as e:
             return('Error writing file error: {}'.format(e), 422)
 
-    create_pdf()
+    if upload:
+        create_pdf()
 
-    try:
-        print('uploaded reports')
-        upload_report()
-    except Exception as e:
-        return('Cannot upload report to S3: {}'.format(e), 422)
+        try:
+            print('uploaded reports')
+            upload_report()
+        except Exception as e:
+            return('Cannot upload report to S3: {}'.format(e), 422)
 
     return ('{} products sent successfully'.format(len(all_products)), 200)
 
 @app.route("/upload")
 def upload_report():
-    aws_access_key_id = os.environ['AWS_ACCESS_KEY_ID']
-    aws_secret_access_key = os.environ['AWS_SECRET_ACCESS_KEY']
+    aws_access_key_id = os.environ['SMART_COOLER_AWS_ACCESS_KEY_ID']
+    aws_secret_access_key = os.environ['SMART_COOLER_AWS_SECRET_ACCESS_KEY']
 
     session = boto3.session.Session(
         aws_access_key_id=aws_access_key_id,
@@ -157,15 +198,6 @@ def upload_report():
 
     return('uploaded files!', 200)
 
-@app.route("/report")
-@auth.login_required
-def get_report():
-    return app.send_static_file('report_output.html')
-
-@app.route("/pdf")
-@auth.login_required
-def get_report_pdf():
-    return app.send_static_file('report_output.pdf')
 
 @app.route('/render')
 def create_pdf():
@@ -191,8 +223,6 @@ if __name__ == '__main__':
     port = 9000
     if len(sys.argv) > 1:
         port = int(sys.argv[1])
-        if port == 80:
-            # only use port 80 on prod
-            pdfkit.configuration(wkhtmltopdf='~/bin/bin')
+    print('>> Using Port {}'.format(port))
 
     app.run(host='0.0.0.0', port=port, threaded=False)
