@@ -29,6 +29,11 @@ section hr {
     margin-bottom: 20px;
 }
 
+.footer {
+    text-align: center;
+}
+
+
 /* Shelfs */
 .shelf-wrapper-mobile {
     display: none;
@@ -44,7 +49,7 @@ section hr {
     height: 490px;
     position: relative;
 }
-@media (max-width: 600px) {
+@media screen (max-width: 600px) {
   .shelf-wrapper {
     display: none;
   }
@@ -131,6 +136,60 @@ section hr {
     right: 0;
     bottom: 0;
 }
+
+/* REPORTS */
+.reports {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+}
+.report {
+    margin: 15px 0;
+}
+.report hr {
+    margin-top: 20px;
+}
+.report-link {
+    display: inline-block;
+    padding-right: 20px;
+}
+
+/* INDEX */
+.pages {
+    width: 600px;
+    margin: 20px auto;
+}
+.page {
+    display: inline-block;
+    width: 32%;
+    max-width: 200px;
+    text-align: center;
+    text-decoration: none;
+    color: #444;
+    margin: 50px auto 20px;
+}
+.page:hover {
+    color: #000;
+}
+.page i {
+    font-size: 80px;
+}
+.page p {
+    font-size: 25px;
+    margin-top: 10px;
+}
+@media screen(max-width: 600px) {
+    .pages {
+        width: 100%;
+    }
+    .page {
+        width: 100%;
+        max-width: 100%;
+        margin: 30px auto 0;
+    }
+}
+
+/* TYPEFACES */
 @font-face {
     font-family:'Proxima Nova';
     src: url('../fonts/Proxima Nova Regular.otf') format('opentype')

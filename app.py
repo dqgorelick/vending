@@ -3,17 +3,19 @@
 import os, sys, json
 from dateutil import tz
 
-from flask import Flask, request, render_template, url_for
+from flask import Flask, request, render_template, url_for, make_response
 from flask_httpauth import HTTPBasicAuth
 from datetime import datetime
-import boto3
 from dotenv import load_dotenv
+import boto3
 import pdfkit
+import sqlite3 as lite
 
 from product_names import products
 
 app = Flask(__name__, static_url_path='')
 auth = HTTPBasicAuth()
+activity = {'0': 'scan', '1': 'open', '2': 'close'}
 
 @auth.verify_password
 def get_pw(username, password):
@@ -21,25 +23,44 @@ def get_pw(username, password):
     pw = os.environ['SMART_COOLER_PASSWORD']
     return username == user and password == pw
 
-@app.route("/")
 @auth.login_required
+@app.route("/")
 def get_index():
     return app.send_static_file('index.html')
 
 @app.route("/report")
 @auth.login_required
 def get_report():
-    return app.send_static_file('report_output.html')
+    ts = request.args.get('ts')
+    if ts:
+        response = make_response(s3.Object(bucket_name, 'historical/' + ts + '/report_output.html').get()['Body'].read())
+    else:
+        response = make_response(s3.Object(bucket_name, 'report_output.html').get()['Body'].read())
+    response.headers['Content-Type'] = 'text/html'
+    return response
 
 @app.route("/pdf")
 @auth.login_required
 def get_report_pdf():
-    return app.send_static_file('report_output.pdf')
+    ts = request.args.get('ts')
+    if ts:
+        response = make_response(s3.Object(bucket_name, 'historical/' + ts + '/report_output.pdf').get()['Body'].read())
+    else:
+        response = make_response(s3.Object(bucket_name, 'report_output.pdf').get()['Body'].read())
+    response.headers['Content-Type'] = 'application/pdf'
+    return response
 
 @app.route("/historical")
 @auth.login_required
 def get_historical():
-    return app.send_static_file('index.html')
+    con = lite.connect('supercooler.db')
+    with con:
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Reports ORDER BY ts DESC")
+        rows = cur.fetchall()
+
+    con.close()
+    return render_template('historical_template.html', reports=rows)
 
 @app.route("/activity")
 @auth.login_required
@@ -65,9 +86,6 @@ def create_report():
         upload = bool(request.args.get('upload'))
     except Exception as e:
         upload = False
-
-    for i in request.args:
-        print(i)
 
     from_zone = tz.tzutc()
     to_zone = tz.gettz('America/New_York')
@@ -152,64 +170,82 @@ def create_report():
             return('Error writing file error: {}'.format(e), 422)
 
     if upload:
-        create_pdf()
+        uploaded = False
+        if create_pdf():
+            try:
+                uploaded = upload_report(ts)
+                print('uploaded reports')
+            except Exception as e:
+                return('Cannot upload report to S3: {}'.format(e), 422)
 
-        try:
-            print('uploaded reports')
-            upload_report()
-        except Exception as e:
-            return('Cannot upload report to S3: {}'.format(e), 422)
+        if uploaded:
+            if not store_reports(ts, pretty_ts, len(all_products)):
+                return ('Was not able to store reports in database: {}'.format(e), 500)
 
     return ('{} products sent successfully'.format(len(all_products)), 200)
 
-@app.route("/upload")
-def upload_report():
-    aws_access_key_id = os.environ['SMART_COOLER_AWS_ACCESS_KEY_ID']
-    aws_secret_access_key = os.environ['SMART_COOLER_AWS_SECRET_ACCESS_KEY']
+def store_reports(ts, pretty, product_count):
+    con = None
+    try:
+        con = lite.connect('./supercooler.db')
+        cur = con.cursor()
+        cur.execute("INSERT INTO Reports VALUES(?, ?, ?)", (ts, pretty, product_count))
+        con.commit()
+    except lite.Error, e:
+        print("Could not connect to database - {}:".format(e.args[0]))
+        return False
+    finally:
+        if con:
+            con.close()
+    return True
 
-    session = boto3.session.Session(
-        aws_access_key_id=aws_access_key_id,
-        aws_secret_access_key=aws_secret_access_key,
-        region_name="us-east-1"
-    )
-    s3 = session.resource("s3")
-
-    bucket_name = "smart-fridge-dark-matter"
+def upload_report(ts):
     html_file_path = os.path.join('./static','report_output.html')
     html_name = 'report_output.html'
     pdf_file_path = os.path.join('./static','report_output.pdf')
     pdf_name = 'report_output.pdf'
 
+    html_ts_path = 'historical/' + ts + '/report_output.html'
+    pdf_ts_path = 'historical/' + ts + '/report_output.pdf'
+
+
     # upload html report
     try:
         print('uploading HTML')
-        response = s3.Object(bucket_name, html_name).put(Body=open(html_file_path, 'rb'), ContentType='text/html')
+        s3.Object(bucket_name, html_name).put(Body=open(html_file_path, 'rb'), ContentType='text/html')
     except Exception as e:
         print('could not upload html: {}'.format(e))
-        return('could not upload html: {}'.format(e), 500)
+        return False
 
     # upload pdf report
     try:
         print('uploading PDF')
-        response = s3.Object(bucket_name, pdf_name).put(Body=open(pdf_file_path, 'rb'), ContentType='text/html')
+        s3.Object(bucket_name, pdf_name).put(Body=open(pdf_file_path, 'rb'), ContentType='application/pdf')
     except Exception as e:
         print('could not upload pdf: {}'.format(e))
-        return('could not upload pdf: {}'.format(e), 500)
+        return False
 
-    return('uploaded files!', 200)
+    # upload historical reports
+    try:
+        print('uploading HTML and PDF')
+        s3.Object(bucket_name, html_ts_path).put(Body=open(html_file_path, 'rb'), ContentType='text/html')
+        s3.Object(bucket_name, pdf_ts_path).put(Body=open(pdf_file_path, 'rb'), ContentType='application/pdf')
+    except Exception as e:
+        print('could not upload html: {}'.format(e))
+        return False
 
+    return True
 
-@app.route('/render')
 def create_pdf():
-
     input_html = os.path.join('./static','report_output.html')
     output_pdf = os.path.join('./static','report_output.pdf')
-
-    options = {
-        'lowquality': None
-    }
-
-    pdfkit.from_file(input_html, output_pdf, options=options)
+    options = { 'lowquality': None }
+    try:
+        pdfkit.from_file(input_html, output_pdf, options=options)
+    except Exception as e:
+        print('could not create PDF - {}'.format(e))
+        return False
+    return True
 
 
 if __name__ == '__main__':
@@ -219,6 +255,18 @@ if __name__ == '__main__':
     except Exception as e:
         print ('cannot find .env file')
     load_dotenv(dotenv_path)
+
+    # prepare s3
+    bucket_name = "smart-fridge-dark-matter"
+    aws_access_key_id = os.environ['SMART_COOLER_AWS_ACCESS_KEY_ID']
+    aws_secret_access_key = os.environ['SMART_COOLER_AWS_SECRET_ACCESS_KEY']
+
+    session = boto3.session.Session(
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key,
+        region_name="us-east-1"
+    )
+    s3 = session.resource("s3")
 
     port = 9000
     if len(sys.argv) > 1:

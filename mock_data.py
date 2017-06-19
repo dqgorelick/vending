@@ -15,13 +15,10 @@ def main():
     upload_items = True
     number_items = 25
 
-    print(len(sys.argv))
     if len(sys.argv) > 1:
         number_items = int(sys.argv[1])
     if len(sys.argv) > 2:
         upload_items = ''
-
-    print(upload_items)
 
     shelfs = ['A','B','C','D']
     for item in range(0,number_items):
